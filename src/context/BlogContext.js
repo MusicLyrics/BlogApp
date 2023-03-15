@@ -29,7 +29,7 @@ const getBlogPosts = dispatch => {
   };
 }
 
-//adding a new Blog Post
+//Create new Blog Post for now API
 const addBlogPost = dispatch => {
   return async (title, content, callback) => {
           //BlogPost save on API
@@ -42,7 +42,7 @@ const addBlogPost = dispatch => {
   };
 };
 
-//Delete a Blog Post
+//Delete a Blog Post for now API
 const deleteBlogPost = dispatch => {
     return async id => {
         await jsonServer.delete(`/blogPosts/${id}`);
@@ -51,7 +51,7 @@ const deleteBlogPost = dispatch => {
     };
 };
 
-//Edit a Blog Post
+//Edit a Blog Post for now API
 const editBlogPost = dispatch => {
   return async (id, title, content, callback ) => {
     await jsonServer.put(`/blogPosts/${id}`, {title, content });
