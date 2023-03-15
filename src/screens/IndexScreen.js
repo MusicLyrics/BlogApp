@@ -9,6 +9,15 @@ const IndexScreen = ({ navigation }) => {
 
   useEffect(() => {
     getBlogPosts();
+
+    //New Fetch for BlogPost
+    const listener = navigation.addListener('didFocus', () => {
+      getBlogPosts();
+    });
+      //Component is not longer visible, clean up from the device
+    return () => {
+      listener.remove();
+    };
   }, []);
 
   return (

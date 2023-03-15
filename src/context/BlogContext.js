@@ -15,16 +15,6 @@ const blogReducer = (state, action) => {
         ? action.payload
         : blogPost;
       }) 
-        
-    case 'add_blogpost':
-      return [...state, 
-        { 
-            //added a id to could delete blogpost and let the app know which's one
-            id: Math.floor(Math.random()* 99999), 
-            title: action.payload.title,
-            content: action.payload.Content
-        }
-    ];
     default:
       return state;
   }
@@ -41,24 +31,30 @@ const getBlogPosts = dispatch => {
 
 //adding a new Blog Post
 const addBlogPost = dispatch => {
-  return (title, content, callback) => {
-    dispatch({ type: 'add_blogpost', payload: {title, content} });
+  return async (title, content, callback) => {
+          //BlogPost save on API
+      await jsonServer.post('/blogposts', {title, content });
+    // dispatch({ type: 'add_blogpost', payload: {title, content} });
+
     if(callback) {
-      callback();
+        callback();
     }
   };
 };
 
 //Delete a Blog Post
 const deleteBlogPost = dispatch => {
-    return id => {
+    return async id => {
+        await jsonServer.delete(`/blogPosts/${id}`);
+
         dispatch({ type: 'delete_blogpost', payload: id })
     };
 };
 
 //Edit a Blog Post
 const editBlogPost = dispatch => {
-  return (id, title, content, callback ) => {
+  return async (id, title, content, callback ) => {
+    await jsonServer.put(`/blogPosts/${id}`, {title, content });
       dispatch({ 
         type: 'edit_blogpost', 
         payload: {id, title, content } 
